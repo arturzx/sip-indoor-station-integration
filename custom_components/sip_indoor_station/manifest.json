@@ -1,0 +1,10 @@
+{
+  "domain": "sip_indoor_station",
+  "name": "SIP Indoor Station",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/arturzx/sip-indoor-station-integration",
+  "iot_class": "local_push",
+  "requirements": [],
+  "version": "0.2.0"
+}

@@ -1,0 +1,51 @@
+{
+  "title": "SIP Indoor Station",
+  "config": {
+    "step": {
+      "user": {
+        "title": "SIP Indoor Station",
+        "description": "Configure the connection to the SIP Indoor Station add-on.",
+        "data": {
+          "device_name": "Device name",
+          "addon_slug": "Add-on slug",
+          "addon_url": "Add-on URL"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "registered": {
+        "name": "Registered"
+      },
+      "ringing": {
+        "name": "Ringing"
+      },
+      "in_call": {
+        "name": "In call"
+      }
+    },
+    "sensor": {
+      "call_state": {
+        "name": "Call state"
+      }
+    },
+    "button": {
+      "answer": {
+        "name": "Answer"
+      },
+      "reject": {
+        "name": "Reject"
+      },
+      "hang_up": {
+        "name": "Hang up"
+      },
+      "open_door": {
+        "name": "Open door"
+      },
+      "reboot": {
+        "name": "Reboot"
+      }
+    }
+  }
+}

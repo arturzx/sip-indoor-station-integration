@@ -1,0 +1,6 @@
+{
+  "name": "SIP Indoor Station",
+  "content_in_root": false,
+  "render_readme": true,
+  "domains": ["sip_indoor_station"]
+}
