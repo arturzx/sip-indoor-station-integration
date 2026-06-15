@@ -1,5 +1,9 @@
 # SIP Indoor Station Integration
 
+<p align="center">
+  <img src="icon.png" alt="SIP Indoor Station icon" width="96">
+</p>
+
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=arturzx&repository=sip-indoor-station-integration&category=integration)
 
 Home Assistant integration for the [SIP Indoor Station add-on](https://github.com/arturzx/hass-addons/tree/master/sip_indoor_station).
