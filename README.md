@@ -1,7 +1,7 @@
 # SIP Indoor Station Integration
 
 <p align="center">
-  <img src="icon.png" alt="SIP Indoor Station icon" width="96">
+  <img src="custom_components/sip_indoor_station/icon.png" alt="SIP Indoor Station icon" width="96">
 </p>
 
 <p align="center">
