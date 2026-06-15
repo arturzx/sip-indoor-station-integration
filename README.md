@@ -4,7 +4,11 @@
   <img src="icon.png" alt="SIP Indoor Station icon" width="96">
 </p>
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=arturzx&repository=sip-indoor-station-integration&category=integration)
+<p align="center">
+  <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=arturzx&repository=sip-indoor-station-integration&category=integration">
+    <img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open SIP Indoor Station Integration in HACS">
+  </a>
+</p>
 
 Home Assistant integration for the [SIP Indoor Station add-on](https://github.com/arturzx/hass-addons/tree/master/sip_indoor_station).
 
@@ -44,7 +48,11 @@ The call-state sensor also includes useful attributes such as `call_id`, `remote
 
 Open this repository in HACS:
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=arturzx&repository=sip-indoor-station-integration&category=integration)
+<p align="center">
+  <a href="https://my.home-assistant.io/redirect/hacs_repository/?owner=arturzx&repository=sip-indoor-station-integration&category=integration">
+    <img src="https://my.home-assistant.io/badges/hacs_repository.svg" alt="Open SIP Indoor Station Integration in HACS">
+  </a>
+</p>
 
 Or add it manually in HACS:
 
