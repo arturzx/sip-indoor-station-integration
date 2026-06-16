@@ -28,6 +28,15 @@
     "sensor": {
       "call_state": {
         "name": "Call state"
+      },
+      "last_call": {
+        "name": "Last call"
+      },
+      "last_missed_call": {
+        "name": "Last missed call"
+      },
+      "missed_call_count": {
+        "name": "Missed call count"
       }
     },
     "button": {

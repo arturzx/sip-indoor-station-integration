@@ -1,0 +1,35 @@
+refresh_call_history:
+  name: Refresh call history
+  description: Refresh SIP Indoor Station call history from the add-on.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Optional SIP Indoor Station config entry ID. If omitted, all entries are refreshed.
+      selector:
+        text:
+
+delete_call_history_entry:
+  name: Delete call history entry
+  description: Delete one SIP Indoor Station call history entry by UUID.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Optional SIP Indoor Station config entry ID. If omitted, the entry is deleted from all entries.
+      selector:
+        text:
+    history_id:
+      name: History ID
+      description: Call history UUID.
+      required: true
+      selector:
+        text:
+
+clear_call_history:
+  name: Clear call history
+  description: Delete all SIP Indoor Station call history entries.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Optional SIP Indoor Station config entry ID. If omitted, history is cleared from all entries.
+      selector:
+        text:

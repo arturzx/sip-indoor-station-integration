@@ -71,6 +71,70 @@ class SipIndoorStationApiClient:
             raise SipIndoorStationApiError("GET /api/state returned non-object JSON")
         return payload
 
+    async def async_get_call_history(self, limit: int = 50) -> dict[str, Any]:
+        """Fetch recent call history from the add-on."""
+        url = self.http_url("/api/call_history")
+        try:
+            async with self.session.get(url, params={"limit": str(limit)}) as response:
+                if response.status >= 400:
+                    body = await response.text()
+                    raise SipIndoorStationApiError(f"GET /api/call_history failed: {response.status} {body}")
+                payload = await response.json()
+        except (aiohttp.ClientError, TimeoutError) as exc:
+            raise SipIndoorStationApiError(f"GET /api/call_history failed: {exc}") from exc
+        if not isinstance(payload, dict):
+            raise SipIndoorStationApiError("GET /api/call_history returned non-object JSON")
+        return payload
+
+    async def async_get_call_history_entry(self, history_id: str) -> dict[str, Any]:
+        """Fetch one call history entry from the add-on."""
+        url = self.http_url(f"/api/call_history/{history_id}")
+        try:
+            async with self.session.get(url) as response:
+                if response.status >= 400:
+                    body = await response.text()
+                    raise SipIndoorStationApiError(f"GET /api/call_history/{history_id} failed: {response.status} {body}")
+                payload = await response.json()
+        except (aiohttp.ClientError, TimeoutError) as exc:
+            raise SipIndoorStationApiError(f"GET /api/call_history/{history_id} failed: {exc}") from exc
+        if not isinstance(payload, dict):
+            raise SipIndoorStationApiError("GET /api/call_history/{history_id} returned non-object JSON")
+        return payload
+
+    async def async_delete_call_history_entry(self, history_id: str) -> dict[str, Any]:
+        """Delete one call history entry from the add-on."""
+        url = self.http_url(f"/api/call_history/{history_id}")
+        try:
+            async with self.session.delete(url) as response:
+                payload = await response.json()
+                if response.status >= 400:
+                    reason = payload.get("reason") if isinstance(payload, dict) else None
+                    raise SipIndoorStationApiError(
+                        f"DELETE /api/call_history/{history_id} failed: {response.status} {reason or ''}".strip()
+                    )
+        except (aiohttp.ClientError, TimeoutError) as exc:
+            raise SipIndoorStationApiError(f"DELETE /api/call_history/{history_id} failed: {exc}") from exc
+        if not isinstance(payload, dict):
+            return {"ok": True}
+        return payload
+
+    async def async_clear_call_history(self) -> dict[str, Any]:
+        """Delete all call history entries from the add-on."""
+        url = self.http_url("/api/call_history")
+        try:
+            async with self.session.delete(url) as response:
+                payload = await response.json()
+                if response.status >= 400:
+                    reason = payload.get("reason") if isinstance(payload, dict) else None
+                    raise SipIndoorStationApiError(
+                        f"DELETE /api/call_history failed: {response.status} {reason or ''}".strip()
+                    )
+        except (aiohttp.ClientError, TimeoutError) as exc:
+            raise SipIndoorStationApiError(f"DELETE /api/call_history failed: {exc}") from exc
+        if not isinstance(payload, dict):
+            return {"ok": True}
+        return payload
+
     async def async_command(self, command: str) -> dict[str, Any]:
         """Call a command endpoint."""
         url = self.http_url(f"/api/{command}")

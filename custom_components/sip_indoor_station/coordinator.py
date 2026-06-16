@@ -95,3 +95,40 @@ class SipIndoorStationCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             self.async_set_updated_data(message["state"])
         elif message.get("type") == "event":
             LOGGER.debug("station_event event=%s", message)
+
+
+class SipIndoorStationHistoryCoordinator(DataUpdateCoordinator[dict[str, Any]]):
+    """Coordinate add-on call history."""
+
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        client: SipIndoorStationApiClient,
+    ) -> None:
+        """Initialize coordinator."""
+        super().__init__(
+            hass,
+            LOGGER,
+            name=f"{DOMAIN}_call_history",
+            update_interval=timedelta(seconds=60),
+        )
+        self.entry = entry
+        self.client = client
+
+    async def _async_update_data(self) -> dict[str, Any]:
+        """Fetch recent call history from the add-on."""
+        try:
+            return await self.client.async_get_call_history()
+        except SipIndoorStationApiError as exc:
+            raise UpdateFailed(str(exc)) from exc
+
+    async def async_delete_entry(self, history_id: str) -> None:
+        """Delete one call history entry and refresh."""
+        await self.client.async_delete_call_history_entry(history_id)
+        await self.async_request_refresh()
+
+    async def async_clear(self) -> None:
+        """Clear call history and refresh."""
+        await self.client.async_clear_call_history()
+        await self.async_request_refresh()
