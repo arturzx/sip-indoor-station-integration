@@ -1,7 +1,7 @@
 # SIP Indoor Station Integration
 
 <p align="center">
-  <img src="brands/custom_integrations/sip_indoor_station/icon.png" alt="SIP Indoor Station icon" width="96">
+  <img src="custom_components/sip_indoor_station/icon.png" alt="SIP Indoor Station icon" width="96">
 </p>
 
 <p align="center">
@@ -31,7 +31,8 @@ The integration creates door station device, with these entities:
 - `button.<device>_answer`: Answer
 - `button.<device>_reject`: Reject
 - `button.<device>_hang_up`: Hang up
-- `button.<device>_open_door`: Open door
+- `button.<device>_open_door`: Open door when the add-on has one relay
+- `button.<device>_open_door_1`, `button.<device>_open_door_2`, ...: Open door buttons when the add-on has multiple relays
 - `button.<device>_reboot`: Reboot
 
 Possible call state values:

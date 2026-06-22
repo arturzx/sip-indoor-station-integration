@@ -37,8 +37,25 @@ class SipIndoorStationCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         )
         self.entry = entry
         self.client = client
+        self.addon_config: dict[str, Any] = {}
         self._ws_task: asyncio.Task[None] | None = None
         self._stopped = asyncio.Event()
+
+    @property
+    def relays_count(self) -> int:
+        """Return configured relay count."""
+        value = self.addon_config.get("relays_count")
+        if type(value) is int and value >= 1:
+            return value
+        return 1
+
+    async def async_load_config(self) -> None:
+        """Fetch stable add-on configuration."""
+        try:
+            self.addon_config = await self.client.async_get_config()
+        except SipIndoorStationApiError as exc:
+            LOGGER.warning("addon_config_fetch_failed error=%s", exc)
+            self.addon_config = {}
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch current state from the add-on."""
@@ -61,9 +78,9 @@ class SipIndoorStationCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             await asyncio.gather(self._ws_task, return_exceptions=True)
             self._ws_task = None
 
-    async def async_command(self, command: str) -> None:
+    async def async_command(self, command: str, payload: dict[str, Any] | None = None) -> None:
         """Send command to the add-on and refresh state."""
-        await self.client.async_command(command)
+        await self.client.async_command(command, payload)
         await self.async_request_refresh()
 
     async def _ws_loop(self) -> None:

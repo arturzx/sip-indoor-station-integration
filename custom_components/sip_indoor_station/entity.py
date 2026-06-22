@@ -20,14 +20,15 @@ class SipIndoorStationEntity(CoordinatorEntity[SipIndoorStationCoordinator]):
         self,
         coordinator: SipIndoorStationCoordinator,
         key: str,
-        translation_key: str,
+        translation_key: str | None,
         name: str,
     ) -> None:
         """Initialize entity."""
         super().__init__(coordinator)
         self._attr_unique_id = f"{coordinator.entry.entry_id}_{key}"
         self._attr_name = name
-        self._attr_translation_key = translation_key
+        if translation_key is not None:
+            self._attr_translation_key = translation_key
         device_name = coordinator.entry.data.get(CONF_DEVICE_NAME, DEFAULT_DEVICE_NAME)
         sw_version = self.state_data.get("version")
         if not isinstance(sw_version, str):

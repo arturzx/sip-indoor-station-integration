@@ -71,6 +71,21 @@ class SipIndoorStationApiClient:
             raise SipIndoorStationApiError("GET /api/state returned non-object JSON")
         return payload
 
+    async def async_get_config(self) -> dict[str, Any]:
+        """Fetch current add-on config."""
+        url = self.http_url("/api/config")
+        try:
+            async with self.session.get(url) as response:
+                if response.status >= 400:
+                    body = await response.text()
+                    raise SipIndoorStationApiError(f"GET /api/config failed: {response.status} {body}")
+                payload = await response.json()
+        except (aiohttp.ClientError, TimeoutError) as exc:
+            raise SipIndoorStationApiError(f"GET /api/config failed: {exc}") from exc
+        if not isinstance(payload, dict):
+            raise SipIndoorStationApiError("GET /api/config returned non-object JSON")
+        return payload
+
     async def async_get_call_history(self, limit: int = 50) -> dict[str, Any]:
         """Fetch recent call history from the add-on."""
         url = self.http_url("/api/call_history")
@@ -135,11 +150,14 @@ class SipIndoorStationApiClient:
             return {"ok": True}
         return payload
 
-    async def async_command(self, command: str) -> dict[str, Any]:
+    async def async_command(self, command: str, request_payload: dict[str, Any] | None = None) -> dict[str, Any]:
         """Call a command endpoint."""
         url = self.http_url(f"/api/{command}")
+        kwargs: dict[str, Any] = {}
+        if request_payload is not None:
+            kwargs["json"] = request_payload
         try:
-            async with self.session.post(url) as response:
+            async with self.session.post(url, **kwargs) as response:
                 try:
                     payload = await response.json()
                 except aiohttp.ContentTypeError:

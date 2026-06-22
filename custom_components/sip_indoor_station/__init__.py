@@ -41,6 +41,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = SipIndoorStationCoordinator(hass, entry, client)
     history_coordinator = SipIndoorStationHistoryCoordinator(hass, entry, client)
     history_coordinator.async_set_updated_data({"calls": []})
+    await coordinator.async_load_config()
     await coordinator.async_config_entry_first_refresh()
     await coordinator.async_start()
 
